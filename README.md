@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # AI Retail Intelligence Platform
 
 An enterprise-ready, multi-tenant Business Intelligence (BI) and predictive analytics platform built from scratch. It allows retailers to upload raw transaction data (CSV or Excel) and automatically clean, model, forecast sales, segment customers, and query their database using a natural language AI Copilot.
@@ -113,3 +114,6 @@ Once running, the entire application serves from: **`http://127.0.0.1:8000`**
 5. Go to the **Dashboard** tab, select the matching sector in the dropdown, drag-and-drop the downloaded CSV file, and click **Process & Train AI**.
 6. The system will automatically process the file.
 7. You can now explore the **Dashboard** metrics, view time-series forecasts in the **Analytics** page, chat with the **AI Assistant**, and download formatted **PDF/Excel reports**.
+=======
+# Retail-Customer-Analytics
+>>>>>>> 1d234c613627f3051acec21a4331d27d14b22189
