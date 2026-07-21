@@ -1,5 +1,5 @@
 <<<<<<< HEAD
-# AI Retail Intelligence Platform
+#  Retail's Customer analytics
 
 An enterprise-ready, multi-tenant Business Intelligence (BI) and predictive analytics platform built from scratch. It allows retailers to upload raw transaction data (CSV or Excel) and automatically clean, model, forecast sales, segment customers, and query their database using a natural language AI Copilot.
 
