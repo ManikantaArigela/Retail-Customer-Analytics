@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Retail BI - Commercial Intelligence Platform</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Client-side PDF Generation libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- CSS Style System -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body class="light-theme">
+    <div class="app-container">
+        
+        <!-- ============================================= -->
+        <!-- SIDEBAR NAVIGATION                            -->
+        <!-- ============================================= -->
+        <aside class="sidebar" id="sidebar" style="display: none;">
+            <div class="sidebar-logo">
+                <i class="fas fa-chart-pie"></i>
+                <span>Retail BI Platform</span>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li class="menu-item active" data-target="dashboard" id="menu-dashboard">
+                    <a href="#"><i class="fas fa-th-large"></i> <span>Dashboard</span></a>
+                </li>
+                <li class="menu-item" data-target="analytics" id="menu-analytics">
+                    <a href="#"><i class="fas fa-chart-line"></i> <span>Analytics</span></a>
+                </li>
+                <li class="menu-item" data-target="reports" id="menu-reports">
+                    <a href="#"><i class="fas fa-file-invoice"></i> <span>Reports</span></a>
+                </li>
+                <li class="menu-item" data-target="data-upload" id="menu-data-upload">
+                    <a href="#"><i class="fas fa-cloud-upload-alt"></i> <span>Data Upload</span></a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile-summary">
+                    <div class="user-avatar" id="user-avatar-char">U</div>
+                    <div class="user-info-text">
+                        <span class="user-name" id="user-name-text">User Name</span>
+                        <span class="user-company" id="user-company-text">Tenant Company</span>
+                    </div>
+                </div>
+                <button class="logout-btn" id="logout-btn" title="Sign Out">
+                    <i class="fas fa-sign-out-alt"></i> <span>Sign Out</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- ============================================= -->
+        <!-- MAIN INTERFACE DISPLAY                        -->
+        <!-- ============================================= -->
+        <main class="main-layout">
+            
+            <!-- TOP NAVIGATION HEADER BAR -->
+            <header class="top-bar" id="top-bar" style="display: none;">
+                <div class="left-topbar">
+                    <button class="collapse-sidebar-btn" id="collapse-sidebar-btn" title="Toggle Sidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="company-tagline" id="topbar-company-name">AI Retail BI</div>
+                    <div class="page-title" id="top-bar-title">Dashboard</div>
+                </div>
+                
+                <div class="right-topbar">
+                    <!-- Search bar -->
+                    <div class="search-box-wrapper">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="topbar-search-input" placeholder="Search parameters, SKUs, regions...">
+                    </div>
+
+                    <!-- Category Selector Dropdown -->
+                    <select id="topbar-category-select" class="topbar-category-select" title="Business Category Selector">
+                        <option value="">All Sectors</option>
+                        <option value="grocery">Grocery Store</option>
+                        <option value="fashion">Fashion & Apparel</option>
+                        <option value="healthcare">Healthcare Products</option>
+                        <option value="pharmacy">Pharmacy Sector</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="furniture">Furniture</option>
+                        <option value="beauty">Beauty & Cosmetics</option>
+                        <option value="automotive">Automotive</option>
+                        <option value="fmcg">FMCG Goods</option>
+                        <option value="home_living">Home & Living</option>
+                    </select>
+
+                    <!-- Refresh Dashboard Button -->
+                    <button class="topbar-action-icon" id="refresh-dashboard-btn" title="Refresh Dashboard Engine">
+                        <i class="fas fa-rotate"></i>
+                    </button>
+
+                    <!-- Business Notifications -->
+                    <button class="topbar-action-icon" id="trigger-notifications" title="Business Alerts">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge"></span>
+                    </button>
+
+                    <!-- Profile avatar -->
+                    <div class="profile-dropdown-trigger" id="topbar-user-profile">
+                        <div class="user-avatar" id="topbar-avatar-char" style="width:30px; height:30px; font-size:13px;">U</div>
+                        <span class="profile-name" id="topbar-user-name">User</span>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- MAIN VIEWS CONTAINER -->
+            <div class="content-body" id="main-content">
+                
+                <!-- ============================================= -->
+                <!-- 1. LOGIN / REGISTER VIEW                      -->
+                <!-- ============================================= -->
+                <section id="view-login" class="app-view" style="display: none;">
+                    <div style="display: flex; align-items: center; justify-content: center; min-height: calc(100vh - 80px); width: 100%;">
+                        <div class="card" style="width: 440px; padding: 40px; border-radius: 20px; box-shadow: var(--shadow-lg);">
+                            
+                            <!-- Login Form -->
+                            <div id="login-section" style="display: block;">
+                                <div style="text-align: center; margin-bottom: 30px;">
+                                    <i class="fas fa-chart-pie" style="font-size: 45px; color: var(--accent-color); margin-bottom: 12px;"></i>
+                                    <h2 style="font-size: 25px; color: var(--text-main); font-weight: 800; margin-bottom: 8px;">AI Retail BI</h2>
+                                    <p style="color: var(--text-muted); font-size: 14px;">Sign in to your Retail BI Intelligence Portal</p>
+                                </div>
+                                
+                                <form id="login-form">
+                                    <div style="margin-bottom: 20px;">
+                                        <label for="login-username" style="display: block; font-size: 12px; font-weight: 700; margin-bottom: 8px; text-transform:uppercase; color:var(--text-muted);">Username</label>
+                                        <input type="text" id="login-username" required placeholder="Enter username" class="filter-select" style="height:44px; width:100%; background-color: var(--bg-color);">
+                                    </div>
+                                    
+                                    <div style="margin-bottom: 24px;">
+                                        <label for="login-password" style="display: block; font-size: 12px; font-weight: 700; margin-bottom: 8px; text-transform:uppercase; color:var(--text-muted);">Password</label>
+                                        <input type="password" id="login-password" required placeholder="Enter password" class="filter-select" style="height:44px; width:100%; background-color: var(--bg-color);">
+                                    </div>
+                                    
+                                    <button type="submit" class="filter-btn-apply" style="width: 100%; height:44px; font-size: 15px; margin-bottom: 20px;">
+                                        Sign In <i class="fas fa-arrow-right" style="margin-left: 6px;"></i>
+                                    </button>
+                                </form>
+                                
+                                <div style="text-align: center; font-size: 13.5px; color: var(--text-muted);">
+                                    Don't have a profile? <a href="#" id="show-register" style="color: var(--accent-color); text-decoration: none; font-weight: 700;">Create Account</a>
+                                </div>
+                            </div>
+
+                            <!-- Register Form -->
+                            <div id="register-section" style="display: none;">
+                                <div style="text-align: center; margin-bottom: 30px;">
+                                    <i class="fas fa-user-plus" style="font-size: 40px; color: var(--accent-color); margin-bottom: 12px;"></i>
+                                    <h2 style="font-size: 25px; color: var(--text-main); font-weight: 800; margin-bottom: 8px;">Create Tenant</h2>
+                                    <p style="color: var(--text-muted); font-size: 14px;">Register a new retail business workspace</p>
+                                </div>
+                                
+                                <form id="register-form">
+                                    <div style="margin-bottom: 16px;">
+                                        <label for="reg-username" style="display: block; font-size: 11px; font-weight: 700; margin-bottom: 6px; text-transform:uppercase; color:var(--text-muted);">Username</label>
+                                        <input type="text" id="reg-username" required placeholder="Choose username" class="filter-select" style="height:40px; width:100%; background-color:var(--bg-color);">
+                                    </div>
+                                    
+                                    <div style="margin-bottom: 16px;">
+                                        <label for="reg-email" style="display: block; font-size: 11px; font-weight: 700; margin-bottom: 6px; text-transform:uppercase; color:var(--text-muted);">Email Address</label>
+                                        <input type="email" id="reg-email" required placeholder="Enter email" class="filter-select" style="height:40px; width:100%; background-color:var(--bg-color);">
+                                    </div>
+                                    
+                                    <div style="margin-bottom: 16px;">
+                                        <label for="reg-password" style="display: block; font-size: 11px; font-weight: 700; margin-bottom: 6px; text-transform:uppercase; color:var(--text-muted);">Password</label>
+                                        <input type="password" id="reg-password" required placeholder="Create password" class="filter-select" style="height:40px; width:100%; background-color:var(--bg-color);">
+                                    </div>
+                                    
+                                    <div style="margin-bottom: 16px;">
+                                        <label for="reg-company" style="display: block; font-size: 11px; font-weight: 700; margin-bottom: 6px; text-transform:uppercase; color:var(--text-muted);">Company Name</label>
+                                        <input type="text" id="reg-company" required placeholder="e.g. Apex Retailers" class="filter-select" style="height:40px; width:100%; background-color:var(--bg-color);">
+                                    </div>
+                                    
+                                    <div style="margin-bottom: 24px;">
+                                        <label for="reg-sector" style="display: block; font-size: 11px; font-weight: 700; margin-bottom: 6px; text-transform:uppercase; color:var(--text-muted);">Business Sector Profile</label>
+                                        <select id="reg-sector" required class="filter-select" style="height:40px; width:100%; background-color:var(--bg-color);">
+                                            <option value="grocery">Grocery Store</option>
+                                            <option value="fashion">Fashion & Apparel</option>
+                                            <option value="healthcare">Healthcare Products</option>
+                                            <option value="pharmacy">Pharmacy Sector</option>
+                                            <option value="electronics">Electronics</option>
+                                            <option value="furniture">Furniture</option>
+                                            <option value="beauty">Beauty & Cosmetics</option>
+                                            <option value="automotive">Automotive</option>
+                                            <option value="fmcg">FMCG Goods</option>
+                                            <option value="home_living">Home & Living</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <button type="submit" class="filter-btn-apply" style="width: 100%; height:44px; font-size: 15px; margin-bottom: 20px;">
+                                        Register Workspace <i class="fas fa-check" style="margin-left: 6px;"></i>
+                                    </button>
+                                </form>
+                                
+                                <div style="text-align: center; font-size: 13.5px; color: var(--text-muted);">
+                                    Already have an account? <a href="#" id="show-login" style="color: var(--accent-color); text-decoration: none; font-weight: 700;">Sign In</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================= -->
+                <!-- 2. DASHBOARD VIEW                             -->
+                <!-- ============================================= -->
+                <section id="view-dashboard" class="app-view" style="display: block;">
+                    
+                    <!-- ADVANCED ENTERPRISE BI FILTER PANEL -->
+                    <div class="global-filters-panel" id="global-filters-panel" style="display:block; margin-bottom:24px;">
+                        <div class="global-filters-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:14px;">
+                            <div class="global-filters-title" style="display:flex; align-items:center; gap:8px; font-weight:800; font-size:15px; color:var(--text-main);">
+                                <i class="fas fa-filter" style="color:var(--accent-color);"></i>
+                                <span>Advanced Real-Time Dashboard Filters</span>
+                            </div>
+                            <div style="display:flex; gap:8px; align-items:center;">
+                                <button class="filter-btn-apply" id="apply-filters-btn" style="height:34px; padding:0 14px; font-size:12px; border-radius:8px;">
+                                    <i class="fas fa-check"></i> Apply Filters
+                                </button>
+                                <button class="filter-btn-reset" id="reset-filters-btn" style="height:34px; padding:0 14px; font-size:12px; border-radius:8px;">
+                                    <i class="fas fa-rotate"></i> Reset Filters
+                                </button>
+                                <button class="filter-btn-reset" id="clear-filters-btn" style="height:34px; padding:0 14px; font-size:12px; border-radius:8px; color:var(--danger-color); border:1px solid var(--danger-color);">
+                                    <i class="fas fa-eraser"></i> Clear Filters
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="filters-inline-grid">
+                            <!-- Date range -->
+                            <div class="filter-inline-box">
+                                <span class="filter-inline-label">Start Date</span>
+                                <input type="date" class="filter-inline-select" id="filter-start-date">
+                            </div>
+                            <div class="filter-inline-box">
+                                <span class="filter-inline-label">End Date</span>
+                                <input type="date" class="filter-inline-select" id="filter-end-date">
+                            </div>
+                            
+                            <!-- Business Category -->
+                            <div class="filter-inline-box">
+                                <span class="filter-inline-label">Business Sector</span>
+                                <select class="filter-inline-select" id="filter-business-category">
+                                    <option value="">All Sectors</option>
+                                    <option value="grocery">Grocery</option>
+                                    <option value="fashion">Fashion</option>
+                                    <option value="healthcare">Healthcare</option>
+                                    <option value="pharmacy">Pharmacy</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="furniture">Furniture</option>
+                                    <option value="beauty">Beauty</option>
+                                    <option value="automotive">Automotive</option>
+                                    <option value="fmcg">FMCG</option>
+                                    <option value="home_living">Home & Living</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Year -->
+                            <div class="filter-inline-box">
+                                <span class="filter-inline-label">Year</span>
+                                <select class="filter-inline-select" id="filter-year">
+                                    <option value="">All Years</option>
+                                    <option value="2026">2026</option>
+                                    <option value="2025">2025</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2023">2023</option>
+                                </select>
+                            </div>
+                            <!-- Quarter -->
+                            <div class="filter-inline-box">
+                                <span class="filter-inline-label">Quarter</span>
+                                <select class="filter-inline-select" id="filter-quarter">
+                                    <option value="">All Quarters</option>
+                                    <option value="Q1">Q1</option>
+                                    <option value="Q2">Q2</option>
+                                    <option value="Q3">Q3</option>
+                                    <option value="Q4">Q4</option>
+                                </select>
+                            </div>
+                            <!-- Month -->
+                            <div class="filter-inline-box">
+                                <span class="filter-inline-label">Month</span>
+                                <select class="filter-inline-select" id="filter-month">
+                                    <option value="">All Months</option>
+                                    <option value="January">January</option>
+                                    <option value="February">February</option>
+                                    <option value="March">March</option>
+                                    <option value="April">April</option>
+                                    <option value="May">May</option>
+                                    <option value="June">June</option>
+                                    <option value="July">July</option>
+                                    <option value="August">August</option>
+                                    <option value="September">September</option>
+                                    <option value="October">October</option>
+                                    <option value="November">November</option>
+                                    <option value="December">December</option>
+                                </select>
+                            </div>
+                            <!-- Week -->
+                            <div class="filter-inline-box">
+                                <span class="filter-inline-label">Week</span>
+                                <select class="filter-inline-select" id="filter-week">
+                                    <option value="">All Weeks</option>
+                                    <option value="1">Week 1</option>
+                                    <option value="2">Week 2</option>
+                                    <option value="3">Week 3</option>
+                                    <option value="4">Week 4</option>
+                                    <option value="5">Week 5</option>
+                                    <option value="6">Week 6</option>
+                                    <option value="7">Week 7</option>
+                                    <option value="8">Week 8</option>
+                                    <option value="9">Week 9</option>
+                                    <option value="10">Week 10</option>
+                                    <option value="12">Week 12</option>
+                                    <option value="16">Week 16</option>
+                                    <option value="20">Week 20</option>
+                                    <option value="24">Week 24</option>
+                                    <option value="28">Week 28</option>
+                                    <option value="32">Week 32</option>
+                                    <option value="36">Week 36</option>
+                                    <option value="40">Week 40</option>
+                                    <option value="44">Week 44</option>
+                                    <option value="48">Week 48</option>
+                                    <option value="52">Week 52</option>
+                                </select>
+                            </div>
+                            <!-- Day of Week -->
+                            <div class="filter-inline-box">
+                                <span class="filter-inline-label">Day of Week</span>
+                                <select class="filter-inline-select" id="filter-day">
+                                    <option value="">All Days</option>
+                                    <option value="Monday">Monday</option>
+                                    <option value="Tuesday">Tuesday</option>
+                                    <option value="Wednesday">Wednesday</option>
+                                    <option value="Thursday">Thursday</option>
+                                    <option value="Friday">Friday</option>
+                                    <option value="Saturday">Saturday</option>
+                                    <option value="Sunday">Sunday</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Store Outlet -->
+                            <div class="filter-inline-box">
+                                <span class="filter-inline-label">Store Outlet</span>
+                                <select class="filter-inline-select" id="filter-store">
+                                    <option value="">All Stores</option>
+                                    <option value="Store East Coast Alpha">Store East Coast Alpha</option>
+                                    <option value="Store East Coast Beta">Store East Coast Beta</option>
+                                    <option value="Store West Coast Alpha">Store West Coast Alpha</option>
+                                    <option value="Store West Coast Beta">Store West Coast Beta</option>
+                                </select>
+                            </div>
+                            <!-- Region -->
+                            <div class="filter-inline-box">
+                                <span class="filter-inline-label">Region</span>
+                                <select class="filter-inline-select" id="filter-region">
+                                    <option value="">All Regions</option>
+                                    <option value="East Coast">East Coast</option>
+                                    <option value="West Coast">West Coast</option>
+                                    <option value="Midwest">Midwest</option>
+                                    <option value="South">South</option>
+                                    <option value="Mountain">Mountain</option>
+                                </select>
+                            </div>
+                            <!-- Country -->
+                            <div class="filter-inline-box">
+                                <span class="filter-inline-label">Country</span>
+                                <select class="filter-inline-select" id="filter-country">
+                                    <option value="">All Countries</option>
+                                    <option value="India">India</option>
+                                    <option value="United States">United States</option>
+                                    <option value="United Kingdom">United Kingdom</option>
+                                </select>
+                            </div>
+                            <!-- State -->
+                            <div class="filter-inline-box">
+                                <span class="filter-inline-label">State</span>
+                                <select class="filter-inline-select" id="filter-state">
+                                    <option value="">All States</option>
+                                    <option value="West Bengal">West Bengal</option>
+                                    <option value="Maharashtra">Maharashtra</option>
+                                    <option value="Delhi">Delhi</option>
+                                    <option value="Karnataka">Karnataka</option>
+                                    <option value="California">California</option>
+                                </select>
+                            </div>
+                            <!-- City -->
+                            <div class="filter-inline-box">
+                                <span class="filter-inline-label">City</span>
+                                <select class="filter-inline-select" id="filter-city">
+                                    <option value="">All Cities</option>
+                                    <option value="Kolkata">Kolkata</option>
+                                    <option value="Mumbai">Mumbai</option>
+                                    <option value="New Delhi">New Delhi</option>
+                                    <option value="Bengaluru">Bengaluru</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Product Category -->
+                            <div class="filter-inline-box">
+                                <span class="filter-inline-label">Product Category</span>
+                                <select class="filter-inline-select" id="filter-product-category">
+                                    <option value="">All Product Categories</option>
+                                </select>
+                            </div>
+                            <!-- Product -->
+                            <div class="filter-inline-box">
+                                <span class="filter-inline-label">Product SKU</span>
+                                <select class="filter-inline-select" id="filter-product">
+                                    <option value="">All Products</option>
+                                </select>
+                            </div>
+                            <!-- Brand -->
+                            <div class="filter-inline-box">
+                                <span class="filter-inline-label">Brand</span>
+                                <select class="filter-inline-select" id="filter-brand">
+                                    <option value="">All Brands</option>
+                                </select>
+                            </div>
+                            <!-- Supplier -->
+                            <div class="filter-inline-box">
+                                <span class="filter-inline-label">Supplier Partner</span>
+                                <select class="filter-inline-select" id="filter-supplier">
+                                    <option value="">All Suppliers</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Customer Profile -->
+                            <div class="filter-inline-box">
+                                <span class="filter-inline-label">Customer Profile</span>
+                                <select class="filter-inline-select" id="filter-customer-type">
+                                    <option value="">All Profiles</option>
+                                    <option value="Champions">Champions</option>
+                                    <option value="Loyal Customers">Loyal Customers</option>
+                                    <option value="At Risk">At Risk</option>
+                                    <option value="New/Promising">New/Promising</option>
+                                </select>
+                            </div>
+                            <!-- Gender -->
+                            <div class="filter-inline-box">
+                                <span class="filter-inline-label">Gender</span>
+                                <select class="filter-inline-select" id="filter-gender">
+                                    <option value="">All Genders</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Unspecified">Unspecified</option>
+                                </select>
+                            </div>
+                            <!-- Sales Channel -->
+                            <div class="filter-inline-box">
+                                <span class="filter-inline-label">Sales Channel</span>
+                                <select class="filter-inline-select" id="filter-sales-channel">
+                                    <option value="">All Channels</option>
+                                    <option value="Online">Online</option>
+                                    <option value="In-Store">In-Store</option>
+                                </select>
+                            </div>
+                            <!-- Payment Method -->
+                            <div class="filter-inline-box">
+                                <span class="filter-inline-label">Payment Method</span>
+                                <select class="filter-inline-select" id="filter-payment-method">
+                                    <option value="">All Payment Methods</option>
+                                    <option value="UPI">UPI</option>
+                                    <option value="Credit Card">Credit Card</option>
+                                    <option value="NetBanking">NetBanking</option>
+                                </select>
+                            </div>
+                            <!-- Stock Status -->
+                            <div class="filter-inline-box">
+                                <span class="filter-inline-label">Stock Status</span>
+                                <select class="filter-inline-select" id="filter-inventory-status">
+                                    <option value="">All Stock Statuses</option>
+                                    <option value="In Stock">In Stock</option>
+                                    <option value="Low Stock">Low Stock</option>
+                                    <option value="Out of Stock">Out of Stock</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 8 INTERACTIVE KPI CARDS GRID -->
+                    <div class="kpis-container-grid">
+                        
+                        <!-- 1. Revenue -->
+                        <div class="kpi-card-premium">
+                            <div class="kpi-card-top">
+                                <span class="kpi-card-title">Total Revenue</span>
+                                <div class="kpi-card-icon revenue"><i class="fas fa-indian-rupee-sign"></i></div>
+                            </div>
+                            <div class="kpi-card-middle">
+                                <span class="kpi-card-val" id="kpi-val-revenue">₹0</span>
+                                <span class="kpi-card-pct up" id="kpi-pct-revenue"><i class="fas fa-arrow-up"></i> +12.4%</span>
+                            </div>
+                            <div class="kpi-sparkline-container">
+                                <canvas id="sparkline-revenue"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- 2. Profit -->
+                        <div class="kpi-card-premium">
+                            <div class="kpi-card-top">
+                                <span class="kpi-card-title">Total Profit</span>
+                                <div class="kpi-card-icon profit"><i class="fas fa-chart-pie"></i></div>
+                            </div>
+                            <div class="kpi-card-middle">
+                                <span class="kpi-card-val" id="kpi-val-profit">₹0</span>
+                                <span class="kpi-card-pct up" id="kpi-pct-profit"><i class="fas fa-arrow-up"></i> +8.1%</span>
+                            </div>
+                            <div class="kpi-sparkline-container">
+                                <canvas id="sparkline-profit"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- 3. Sales -->
+                        <div class="kpi-card-premium">
+                            <div class="kpi-card-top">
+                                <span class="kpi-card-title">Sales Volume</span>
+                                <div class="kpi-card-icon sales"><i class="fas fa-shopping-cart"></i></div>
+                            </div>
+                            <div class="kpi-card-middle">
+                                <span class="kpi-card-val" id="kpi-val-sales">0</span>
+                                <span class="kpi-card-pct up" id="kpi-pct-sales"><i class="fas fa-arrow-up"></i> +14.2%</span>
+                            </div>
+                            <div class="kpi-sparkline-container">
+                                <canvas id="sparkline-sales"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- 4. Orders -->
+                        <div class="kpi-card-premium">
+                            <div class="kpi-card-top">
+                                <span class="kpi-card-title">Total Orders</span>
+                                <div class="kpi-card-icon orders"><i class="fas fa-receipt"></i></div>
+                            </div>
+                            <div class="kpi-card-middle">
+                                <span class="kpi-card-val" id="kpi-val-orders">0</span>
+                                <span class="kpi-card-pct up" id="kpi-pct-orders"><i class="fas fa-arrow-up"></i> +6.5%</span>
+                            </div>
+                            <div class="kpi-sparkline-container">
+                                <canvas id="sparkline-orders"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- 5. Customers -->
+                        <div class="kpi-card-premium">
+                            <div class="kpi-card-top">
+                                <span class="kpi-card-title">Customers</span>
+                                <div class="kpi-card-icon customers"><i class="fas fa-users"></i></div>
+                            </div>
+                            <div class="kpi-card-middle">
+                                <span class="kpi-card-val" id="kpi-val-customers">0</span>
+                                <span class="kpi-card-pct up" id="kpi-pct-customers"><i class="fas fa-arrow-up"></i> +9.8%</span>
+                            </div>
+                            <div class="kpi-sparkline-container">
+                                <canvas id="sparkline-customers"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- 6. Products -->
+                        <div class="kpi-card-premium">
+                            <div class="kpi-card-top">
+                                <span class="kpi-card-title">Active SKUs</span>
+                                <div class="kpi-card-icon products"><i class="fas fa-box-open"></i></div>
+                            </div>
+                            <div class="kpi-card-middle">
+                                <span class="kpi-card-val" id="kpi-val-products">0</span>
+                                <span class="kpi-card-pct up" id="kpi-pct-products"><i class="fas fa-minus"></i> 0.0%</span>
+                            </div>
+                            <div class="kpi-sparkline-container">
+                                <canvas id="sparkline-products"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- 7. Inventory -->
+                        <div class="kpi-card-premium">
+                            <div class="kpi-card-top">
+                                <span class="kpi-card-title">Inventory Count</span>
+                                <div class="kpi-card-icon inventory"><i class="fas fa-warehouse"></i></div>
+                            </div>
+                            <div class="kpi-card-middle">
+                                <span class="kpi-card-val" id="kpi-val-inventory">0</span>
+                                <span class="kpi-card-pct down" id="kpi-pct-inventory"><i class="fas fa-arrow-down"></i> -3.1%</span>
+                            </div>
+                            <div class="kpi-sparkline-container">
+                                <canvas id="sparkline-inventory"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- 8. Growth Rate -->
+                        <div class="kpi-card-premium">
+                            <div class="kpi-card-top">
+                                <span class="kpi-card-title">Growth Rate</span>
+                                <div class="kpi-card-icon growth"><i class="fas fa-arrow-trend-up"></i></div>
+                            </div>
+                            <div class="kpi-card-middle">
+                                <span class="kpi-card-val" id="kpi-val-growth">0.0%</span>
+                                <span class="kpi-card-pct up" id="kpi-pct-growth"><i class="fas fa-arrow-up"></i> +4.5%</span>
+                            </div>
+                            <div class="kpi-sparkline-container">
+                                <canvas id="sparkline-growth"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TIMELINE SWITCHER BAR -->
+                    <div class="card" style="padding: 12px 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-clock" style="color: var(--accent-color);"></i>
+                            <span style="font-size: 13px; font-weight: 700; color: var(--text-main);">Sales Aggregation Timeline:</span>
+                        </div>
+                        <div style="display: flex; gap: 6px;">
+                            <button class="timeline-btn" data-timeframe="daily" onclick="switchSalesTimeframe('daily')">Daily</button>
+                            <button class="timeline-btn" data-timeframe="weekly" onclick="switchSalesTimeframe('weekly')">Weekly</button>
+                            <button class="timeline-btn active" data-timeframe="monthly" onclick="switchSalesTimeframe('monthly')">Monthly</button>
+                            <button class="timeline-btn" data-timeframe="quarterly" onclick="switchSalesTimeframe('quarterly')">Quarterly</button>
+                            <button class="timeline-btn" data-timeframe="yearly" onclick="switchSalesTimeframe('yearly')">Yearly</button>
+                        </div>
+                    </div>
+
+                    <!-- WIDGET GRID 1: REVENUE TREND & CATEGORY DISTRIBUTION -->
+                    <div class="bi-dashboard-grid-1">
+                        <div class="chart-card-bi">
+                            <div class="chart-card-header">
+                                <div>
+                                    <div class="chart-card-title" id="sales-trend-title">Revenue & Sales Performance Trend</div>
+                                    <div class="chart-card-subtitle">Real-time revenue trajectory across active dimension filters</div>
+                                </div>
+                                <div class="chart-card-actions">
+                                    <button class="chart-btn-icon" onclick="App.exportChartAsImage('chart-sales-trend', 'revenue-trend.png')" title="Export PNG"><i class="fas fa-download"></i></button>
+                                    <button class="chart-btn-icon" onclick="App.showFullscreenChart('Revenue Trend', 'chart-sales-trend')" title="Full Screen"><i class="fas fa-expand"></i></button>
+                                </div>
+                            </div>
+                            <div class="chart-canvas-container">
+                                <canvas id="chart-sales-trend"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card-bi">
+                            <div class="chart-card-header">
+                                <div>
+                                    <div class="chart-card-title">Category Revenue Distribution</div>
+                                    <div class="chart-card-subtitle">Share of sales across product categories</div>
+                                </div>
+                                <div class="chart-card-actions">
+                                    <button class="chart-btn-icon" onclick="App.exportChartAsImage('chart-category-distribution', 'category-distribution.png')"><i class="fas fa-download"></i></button>
+                                </div>
+                            </div>
+                            <div class="chart-canvas-container">
+                                <canvas id="chart-category-distribution"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- WIDGET GRID 2: TOP SELLING & LOWEST SELLING PRODUCTS -->
+                    <div class="bi-dashboard-grid-2">
+                        <div class="chart-card-bi">
+                            <div class="chart-card-header">
+                                <div>
+                                    <div class="chart-card-title"><i class="fas fa-trophy" style="color:#f59e0b; margin-right:6px;"></i> Top Selling Products</div>
+                                    <div class="chart-card-subtitle">Highest grossing SKUs in active dataset</div>
+                                </div>
+                                <div class="chart-card-actions">
+                                    <button class="chart-btn-icon" onclick="App.exportChartAsImage('chart-top-products', 'top-products.png')"><i class="fas fa-download"></i></button>
+                                </div>
+                            </div>
+                            <div class="chart-canvas-container">
+                                <canvas id="chart-top-products"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card-bi">
+                            <div class="chart-card-header">
+                                <div>
+                                    <div class="chart-card-title"><i class="fas fa-triangle-exclamation" style="color:#ef4444; margin-right:6px;"></i> Lowest Selling Products</div>
+                                    <div class="chart-card-subtitle">Underperforming SKUs requiring markdown or promo</div>
+                                </div>
+                                <div class="chart-card-actions">
+                                    <button class="chart-btn-icon" onclick="App.exportChartAsImage('chart-worst-products', 'lowest-products.png')"><i class="fas fa-download"></i></button>
+                                </div>
+                            </div>
+                            <div class="chart-canvas-container">
+                                <canvas id="chart-worst-products"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- WIDGET GRID 3: REGIONAL PERFORMANCE & SALES HEATMAP -->
+                    <div class="bi-dashboard-grid-3">
+                        <div class="chart-card-bi">
+                            <div class="chart-card-header">
+                                <div>
+                                    <div class="chart-card-title">Sales by Region & Store</div>
+                                    <div class="chart-card-subtitle">Geographic revenue breakdown</div>
+                                </div>
+                                <div class="chart-card-actions">
+                                    <button class="chart-btn-icon" onclick="App.exportChartAsImage('chart-regional-sales', 'regional-sales.png')"><i class="fas fa-download"></i></button>
+                                </div>
+                            </div>
+                            <div class="chart-canvas-container">
+                                <canvas id="chart-regional-sales"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card-bi">
+                            <div class="chart-card-header">
+                                <div>
+                                    <div class="chart-card-title">Sales Heatmap Matrix</div>
+                                    <div class="chart-card-subtitle">Peak revenue activity across regions and days of week</div>
+                                </div>
+                            </div>
+                            <div class="chart-canvas-container" id="sales-heatmap-container" style="display:flex; align-items:center; justify-center; overflow-x:auto;">
+                                <table class="table" style="font-size:11.5px; text-align:center;">
+                                    <thead>
+                                        <tr>
+                                            <th>Region</th>
+                                            <th>Mon</th>
+                                            <th>Tue</th>
+                                            <th>Wed</th>
+                                            <th>Thu</th>
+                                            <th>Fri</th>
+                                            <th>Sat</th>
+                                            <th>Sun</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="heatmap-table-body">
+                                        <!-- Dynamically loaded -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- WIDGET GRID 4: CUSTOMER SEGMENTS & SUPPLIER PERFORMANCE -->
+                    <div class="bi-dashboard-grid-2">
+                        <div class="chart-card-bi">
+                            <div class="chart-card-header">
+                                <div>
+                                    <div class="chart-card-title">Customer Profile Segmentation</div>
+                                    <div class="chart-card-subtitle">RFM cohort distribution (Champions, Loyal, At Risk)</div>
+                                </div>
+                                <div class="chart-card-actions">
+                                    <button class="chart-btn-icon" onclick="App.exportChartAsImage('chart-customer-segments', 'customer-segments.png')"><i class="fas fa-download"></i></button>
+                                </div>
+                            </div>
+                            <div class="chart-canvas-container">
+                                <canvas id="chart-customer-segments"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card-bi">
+                            <div class="chart-card-header">
+                                <div>
+                                    <div class="chart-card-title">Supplier Partner Performance</div>
+                                    <div class="chart-card-subtitle">Order volume & fulfillment reliability across suppliers</div>
+                                </div>
+                                <div class="chart-card-actions">
+                                    <button class="chart-btn-icon" onclick="App.exportChartAsImage('chart-supplier-performance', 'supplier-performance.png')"><i class="fas fa-download"></i></button>
+                                </div>
+                            </div>
+                            <div class="chart-canvas-container">
+                                <canvas id="chart-supplier-performance"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- WIDGET GRID 5: INVENTORY GAUGE & LOW STOCK ALERTS -->
+                    <div class="bi-dashboard-grid-3">
+                        <div class="chart-card-bi">
+                            <div class="chart-card-header">
+                                <div>
+                                    <div class="chart-card-title">Inventory Health Score</div>
+                                    <div class="chart-card-subtitle">Stock availability vs reorder threshold</div>
+                                </div>
+                            </div>
+                            <div class="chart-canvas-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
+                                <div style="height:170px; width:100%; position:relative;">
+                                    <canvas id="chart-inventory-gauge"></canvas>
+                                </div>
+                                <div style="text-align:center; margin-top:-20px;">
+                                    <span style="font-size:26px; font-weight:800; color:var(--success-color);" id="inventory-health-score-val">88%</span>
+                                    <p style="font-size:12px; color:var(--text-muted);">Stock Turnover Ratio Healthy</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chart-card-bi">
+                            <div class="chart-card-header">
+                                <div>
+                                    <div class="chart-card-title"><i class="fas fa-triangle-exclamation" style="color:var(--warning-color); margin-right:6px;"></i> Low Stock Products Alert</div>
+                                    <div class="chart-card-subtitle">SKUs nearing or below safety stock threshold</div>
+                                </div>
+                            </div>
+                            <div class="chart-canvas-container" style="overflow-y:auto; max-height:260px;">
+                                <table class="table" style="font-size:12px;">
+                                    <thead>
+                                        <tr>
+                                            <th>SKU Product</th>
+                                            <th>Category</th>
+                                            <th>Current Stock</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="low-stock-table-body">
+                                        <!-- Dynamically generated -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RECENT TRANSACTIONS LEDGER & ALERTS -->
+                    <div class="chart-card-bi" style="margin-bottom: 24px;">
+                        <div class="chart-card-header">
+                            <div>
+                                <div class="chart-card-title">Recent Transactions & Audit Ledger</div>
+                                <div class="chart-card-subtitle">Filtered itemized transactions list</div>
+                            </div>
+                            <div style="display:flex; gap:10px;">
+                                <input type="text" id="tx-search-input" placeholder="Search orders..." class="filter-select" style="height:32px; font-size:12px; width:180px;">
+                                <button class="filter-btn-apply" onclick="exportTransactionsCSV()" style="height:32px; padding:0 12px; font-size:12px;"><i class="fas fa-file-csv"></i> Export CSV</button>
+                            </div>
+                        </div>
+                        <div style="overflow-x:auto;">
+                            <table class="table" id="transactions-table">
+                                <thead>
+                                    <tr>
+                                        <th onclick="sortTransactionsTable('Order ID')" style="cursor:pointer;">Order ID <i class="fas fa-sort"></i></th>
+                                        <th onclick="sortTransactionsTable('Order Date')" style="cursor:pointer;">Date <i class="fas fa-sort"></i></th>
+                                        <th onclick="sortTransactionsTable('store')" style="cursor:pointer;">Store <i class="fas fa-sort"></i></th>
+                                        <th onclick="sortTransactionsTable('Product')" style="cursor:pointer;">Product SKU <i class="fas fa-sort"></i></th>
+                                        <th onclick="sortTransactionsTable('Category')" style="cursor:pointer;">Category <i class="fas fa-sort"></i></th>
+                                        <th onclick="sortTransactionsTable('Customer_Type')" style="cursor:pointer;">Customer <i class="fas fa-sort"></i></th>
+                                        <th onclick="sortTransactionsTable('Quantity')" style="cursor:pointer;">Qty <i class="fas fa-sort"></i></th>
+                                        <th onclick="sortTransactionsTable('Total Amount')" style="cursor:pointer;">Amount <i class="fas fa-sort"></i></th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transactions-table-body">
+                                    <!-- Dynamically filled -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination-bar" id="transactions-pagination">
+                            <!-- Pagination controls -->
+                        </div>
+                    </div>
+
+                </section>
+
+                <!-- ============================================= -->
+                <!-- 3. ANALYTICS VIEW                             -->
+                <!-- ============================================= -->
+                <section id="view-analytics" class="app-view" style="display: none;">
+                    
+                    <!-- ANALYTICS HEADER KPI BANNER -->
+                    <div class="kpis-container-grid" style="grid-template-columns: repeat(4, 1fr);">
+                        <div class="kpi-card-premium" style="height:110px;">
+                            <div class="kpi-card-top">
+                                <span class="kpi-card-title">Business Health Score</span>
+                                <i class="fas fa-heart-pulse" style="color:var(--success-color);"></i>
+                            </div>
+                            <div class="kpi-card-val" style="margin-top:10px;" id="analytics-health-score">92 / 100</div>
+                            <span class="kpi-card-pct up" style="margin-top:4px;"><i class="fas fa-check"></i> Excellent Operational Index</span>
+                        </div>
+
+                        <div class="kpi-card-premium" style="height:110px;">
+                            <div class="kpi-card-top">
+                                <span class="kpi-card-title">Monthly Sales Forecast</span>
+                                <i class="fas fa-wand-magic-sparkles" style="color:var(--accent-color);"></i>
+                            </div>
+                            <div class="kpi-card-val" style="margin-top:10px;" id="analytics-forecast-val">₹0</div>
+                            <span class="kpi-card-pct up" style="margin-top:4px;"><i class="fas fa-arrow-up"></i> ML Time Series Model</span>
+                        </div>
+
+                        <div class="kpi-card-premium" style="height:110px;">
+                            <div class="kpi-card-top">
+                                <span class="kpi-card-title">Customer Churn Risk</span>
+                                <i class="fas fa-user-slash" style="color:var(--danger-color);"></i>
+                            </div>
+                            <div class="kpi-card-val" style="margin-top:10px;" id="analytics-churn-val">4.2%</div>
+                            <span class="kpi-card-pct up" style="margin-top:4px; background-color:var(--success-light); color:var(--success-color);"><i class="fas fa-shield-halved"></i> Low Risk Exposure</span>
+                        </div>
+
+                        <div class="kpi-card-premium" style="height:110px;">
+                            <div class="kpi-card-top">
+                                <span class="kpi-card-title">Average Order Value (AOV)</span>
+                                <i class="fas fa-bag-shopping" style="color:#8b5cf6;"></i>
+                            </div>
+                            <div class="kpi-card-val" style="margin-top:10px;" id="analytics-aov-val">₹0</div>
+                            <span class="kpi-card-pct up" style="margin-top:4px;"><i class="fas fa-arrow-up"></i> +5.8% vs Prev Period</span>
+                        </div>
+                    </div>
+
+                    <!-- ANALYTICS CHARTS GRID 1: SEASONAL COMPARISON & ML FORECAST -->
+                    <div class="bi-dashboard-grid-1" style="margin-top:20px;">
+                        <div class="chart-card-bi">
+                            <div class="chart-card-header">
+                                <div>
+                                    <div class="chart-card-title">Monthly & Seasonal Comparison</div>
+                                    <div class="chart-card-subtitle">Year-over-year revenue pattern matching</div>
+                                </div>
+                            </div>
+                            <div class="chart-canvas-container">
+                                <canvas id="chart-analytics-seasonal"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card-bi">
+                            <div class="chart-card-header">
+                                <div>
+                                    <div class="chart-card-title">ML Autoregressive Forecast</div>
+                                    <div class="chart-card-subtitle">Next period predicted sales & confidence limits</div>
+                                </div>
+                            </div>
+                            <div class="chart-canvas-container">
+                                <canvas id="chart-analytics-forecast"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ANALYTICS CHARTS GRID 2: PARETO 80/20 & SEGMENTS -->
+                    <div class="bi-dashboard-grid-2">
+                        <div class="chart-card-bi">
+                            <div class="chart-card-header">
+                                <div>
+                                    <div class="chart-card-title">Pareto 80/20 Revenue Matrix</div>
+                                    <div class="chart-card-subtitle">Cumulative revenue contribution by top SKUs</div>
+                                </div>
+                            </div>
+                            <div class="chart-canvas-container">
+                                <canvas id="chart-analytics-pareto"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card-bi">
+                            <div class="chart-card-header">
+                                <div>
+                                    <div class="chart-card-title">AI Actionable Recommendations</div>
+                                    <div class="chart-card-subtitle">Automated business strategy suggestions</div>
+                                </div>
+                            </div>
+                            <div style="padding:15px; overflow-y:auto; max-height:280px;" id="analytics-recommendations-list">
+                                <!-- Generated -->
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+
+                <!-- ============================================= -->
+                <!-- 4. DATA UPLOAD VIEW                           -->
+                <!-- ============================================= -->
+                <section id="view-data-upload" class="app-view" style="display: none;">
+                    
+                    <!-- DATA SOURCE CONNECTOR CARDS -->
+                    <div style="margin-bottom:24px;">
+                        <h3 style="font-size:18px; font-weight:800; margin-bottom:6px; color:var(--text-main);">Supported Data Sources & Ingestion Channels</h3>
+                        <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">Connect file formats, relational databases, or cloud REST endpoints directly into the Retail BI ETL Engine.</p>
+                        
+                        <div class="kpis-container-grid" style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));">
+                            <div class="kpi-card-premium" style="height:90px; padding:12px; text-align:center; align-items:center; justify-content:center; cursor:pointer;" onclick="document.getElementById('file-input').click();">
+                                <i class="fas fa-file-csv" style="font-size:24px; color:var(--accent-color); margin-bottom:4px;"></i>
+                                <span style="font-size:12px; font-weight:700;">CSV Files</span>
+                            </div>
+                            <div class="kpi-card-premium" style="height:90px; padding:12px; text-align:center; align-items:center; justify-content:center; cursor:pointer;" onclick="document.getElementById('file-input').click();">
+                                <i class="fas fa-file-excel" style="font-size:24px; color:var(--success-color); margin-bottom:4px;"></i>
+                                <span style="font-size:12px; font-weight:700;">Excel (.xlsx)</span>
+                            </div>
+                            <div class="kpi-card-premium" style="height:90px; padding:12px; text-align:center; align-items:center; justify-content:center; cursor:pointer;" onclick="document.getElementById('file-input').click();">
+                                <i class="fas fa-file-code" style="font-size:24px; color:#8b5cf6; margin-bottom:4px;"></i>
+                                <span style="font-size:12px; font-weight:700;">JSON Data</span>
+                            </div>
+                            <div class="kpi-card-premium" style="height:90px; padding:12px; text-align:center; align-items:center; justify-content:center; cursor:pointer;" onclick="connectDataSource('sqlite')">
+                                <i class="fas fa-database" style="font-size:24px; color:#f59e0b; margin-bottom:4px;"></i>
+                                <span style="font-size:12px; font-weight:700;">SQLite / SQL</span>
+                            </div>
+                            <div class="kpi-card-premium" style="height:90px; padding:12px; text-align:center; align-items:center; justify-content:center; cursor:pointer;" onclick="connectDataSource('postgresql')">
+                                <i class="fas fa-server" style="font-size:24px; color:#3b82f6; margin-bottom:4px;"></i>
+                                <span style="font-size:12px; font-weight:700;">PostgreSQL</span>
+                            </div>
+                            <div class="kpi-card-premium" style="height:90px; padding:12px; text-align:center; align-items:center; justify-content:center; cursor:pointer;" onclick="connectDataSource('rest_api')">
+                                <i class="fas fa-network-wired" style="font-size:24px; color:#ec4899; margin-bottom:4px;"></i>
+                                <span style="font-size:12px; font-weight:700;">REST API</span>
+                            </div>
+                            <div class="kpi-card-premium" style="height:90px; padding:12px; text-align:center; align-items:center; justify-content:center; cursor:pointer;" onclick="connectDataSource('google_sheets')">
+                                <i class="fab fa-google-drive" style="font-size:24px; color:#10b981; margin-bottom:4px;"></i>
+                                <span style="font-size:12px; font-weight:700;">Google Sheets</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- UPLOAD SECTION & SAMPLE DATASET GENERATOR GRID -->
+                    <div class="bi-dashboard-grid-2">
+                        
+                        <!-- Drag & Drop Uploader Card -->
+                        <div class="chart-card-bi">
+                            <div class="chart-card-header">
+                                <div>
+                                    <div class="chart-card-title"><i class="fas fa-cloud-arrow-up" style="color:var(--accent-color); margin-right:6px;"></i> Ingest Transaction Dataset</div>
+                                    <div class="chart-card-subtitle">Upload CSV/Excel file to trigger cleaning, ETL, and ML training</div>
+                                </div>
+                            </div>
+                            
+                            <form id="upload-form" style="display:flex; flex-direction:column; gap:16px;">
+                                <div>
+                                    <label style="display:block; font-size:12px; font-weight:700; margin-bottom:6px; color:var(--text-muted);">Target Retail Sector Profile</label>
+                                    <select id="upload-sector-select" required class="filter-select" style="height:40px; width:100%;">
+                                        <option value="grocery">Grocery Store</option>
+                                        <option value="fashion">Fashion & Apparel</option>
+                                        <option value="healthcare">Healthcare Products</option>
+                                        <option value="pharmacy">Pharmacy Sector</option>
+                                        <option value="electronics">Electronics</option>
+                                        <option value="furniture">Furniture</option>
+                                        <option value="beauty">Beauty & Cosmetics</option>
+                                        <option value="automotive">Automotive</option>
+                                        <option value="fmcg">FMCG Goods</option>
+                                        <option value="home_living">Home & Living</option>
+                                    </select>
+                                </div>
+
+                                <div class="drop-zone" id="drag-drop-zone" onclick="document.getElementById('file-input').click();">
+                                    <i class="fas fa-file-arrow-up" style="font-size:42px; color:var(--accent-color); margin-bottom:12px;"></i>
+                                    <p style="font-size:15px; font-weight:700; color:var(--text-main);">Drag & Drop CSV / Excel file here</p>
+                                    <p style="font-size:12px; color:var(--text-muted); margin-top:4px;">or click to browse local filesystem</p>
+                                    <input type="file" id="file-input" accept=".csv, .xlsx, .xls, .json" style="display:none;">
+                                    <div id="file-details-badge" style="display:none; margin-top:12px; font-size:12px; font-weight:700; color:var(--accent-color); background:var(--accent-light); padding:4px 12px; border-radius:20px;"></div>
+                                </div>
+
+                                <button type="submit" class="filter-btn-apply" style="height:44px; font-size:15px;">
+                                    Process & Train Models <i class="fas fa-bolt" style="margin-left:6px;"></i>
+                                </button>
+                            </form>
+
+                            <!-- Progress Animation Bar -->
+                            <div id="upload-progress-container" style="display:none; margin-top:16px;">
+                                <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; margin-bottom:4px;">
+                                    <span id="upload-status-text">Uploading dataset...</span>
+                                    <span id="upload-percent-text">0%</span>
+                                </div>
+                                <div style="height:8px; width:100%; background:var(--border-color); border-radius:4px; overflow:hidden;">
+                                    <div id="upload-progress-bar" style="height:100%; width:0%; background:var(--accent-color); transition:width 0.3s;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sample Generator & Quick Reset Card -->
+                        <div class="chart-card-bi">
+                            <div class="chart-card-header">
+                                <div>
+                                    <div class="chart-card-title"><i class="fas fa-wand-magic-sparkles" style="color:#8b5cf6; margin-right:6px;"></i> Sample Sector Dataset Generator</div>
+                                    <div class="chart-card-subtitle">Generate pre-formatted realistic multi-store sales data</div>
+                                </div>
+                            </div>
+
+                            <div style="display:flex; flex-direction:column; gap:16px; justify-content:space-between; height:100%;">
+                                <p style="font-size:13px; color:var(--text-muted);">Select a retail vertical below to instantly download a comprehensive 100+ transaction dataset pre-populated with stores, SKUs, regions, and customer cohorts.</p>
+
+                                <div>
+                                    <label style="display:block; font-size:12px; font-weight:700; margin-bottom:6px; color:var(--text-muted);">Sample Industry Vertical</label>
+                                    <select id="sample-sector-select" class="filter-select" style="height:40px; width:100%;">
+                                        <option value="grocery">Grocery Store</option>
+                                        <option value="fashion">Fashion & Apparel</option>
+                                        <option value="healthcare">Healthcare & Biotech</option>
+                                        <option value="pharmacy">Pharmacy Sector</option>
+                                        <option value="electronics">Electronics</option>
+                                        <option value="furniture">Furniture</option>
+                                        <option value="beauty">Beauty & Cosmetics</option>
+                                        <option value="automotive">Automotive</option>
+                                        <option value="fmcg">FMCG Goods</option>
+                                        <option value="home_living">Home & Living</option>
+                                    </select>
+                                </div>
+
+                                <button class="filter-btn-apply" id="download-sample-btn" style="height:44px; font-size:14px; background-color:#8b5cf6;">
+                                    <i class="fas fa-download" style="margin-right:6px;"></i> Download Sample CSV
+                                </button>
+
+                                <hr style="border:none; border-top:1px solid var(--border-color); margin:10px 0;">
+
+                                <div>
+                                    <div style="font-size:13px; font-weight:700; color:var(--danger-color); margin-bottom:4px;">Account Data Reset Zone</div>
+                                    <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">Clear all uploaded datasets and reset ML models for this tenant profile.</p>
+                                    <button class="filter-btn-reset" id="reset-account-data-btn" style="height:36px; width:100%; color:var(--danger-color); border:1px solid var(--danger-color); font-weight:700;">
+                                        <i class="fas fa-trash-can" style="margin-right:6px;"></i> Wipe Account Datasets & Reset Models
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- UPLOAD HISTORY & QUALITY AUDIT TABLE -->
+                    <div class="chart-card-bi" style="margin-top:24px;">
+                        <div class="chart-card-header">
+                            <div>
+                                <div class="chart-card-title">Dataset Upload History & Data Quality Audit</div>
+                                <div class="chart-card-subtitle">Log of ingested datasets and row counts</div>
+                            </div>
+                        </div>
+                        <div style="overflow-x:auto;">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Dataset ID</th>
+                                        <th>Filename</th>
+                                        <th>Sector Profile</th>
+                                        <th>Row Count</th>
+                                        <th>Uploaded Date</th>
+                                        <th>Quality Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="upload-history-table-body">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </section>
+
+                <!-- ============================================= -->
+                <!-- 5. REPORTS VIEW                               -->
+                <!-- ============================================= -->
+                <section id="view-reports" class="app-view" style="display: none;">
+                    
+                    <!-- REPORT EXPORT CONTROLS BAR -->
+                    <div class="card" style="padding:20px; margin-bottom:24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+                        <div>
+                            <h3 style="font-size:18px; font-weight:800; color:var(--text-main); margin-bottom:4px;"><i class="fas fa-file-invoice" style="color:var(--accent-color); margin-right:8px;"></i> Executive Business Intelligence Report</h3>
+                            <p style="font-size:13px; color:var(--text-muted);">Generate publication-ready PDF, Excel, and CSV briefing reports embedded with active charts and metrics.</p>
+                        </div>
+                        
+                        <div style="display:flex; gap:12px;">
+                            <button class="filter-btn-apply" id="export-pdf-btn" style="height:42px; padding:0 18px; background-color:#ef4444; font-size:14px;">
+                                <i class="fas fa-file-pdf" style="margin-right:6px;"></i> Download PDF Report
+                            </button>
+                            <button class="filter-btn-apply" id="export-excel-btn" style="height:42px; padding:0 18px; background-color:#10b981; font-size:14px;">
+                                <i class="fas fa-file-excel" style="margin-right:6px;"></i> Export Excel (.xlsx)
+                            </button>
+                            <button class="filter-btn-apply" id="export-csv-btn" style="height:42px; padding:0 18px; background-color:var(--accent-color); font-size:14px;">
+                                <i class="fas fa-file-csv" style="margin-right:6px;"></i> Export CSV Data
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- EXECUTIVE BRIEFING DOCUMENT PREVIEW -->
+                    <div class="card" id="report-briefing-document" style="padding:40px; border-radius:16px; background-color:#ffffff; color:#0f172a; border:1px solid #e2e8f0; box-shadow:var(--shadow-md);">
+                        
+                        <!-- Document Header -->
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2px solid #0f172a; padding-bottom:20px; margin-bottom:30px;">
+                            <div>
+                                <div style="font-size:24px; font-weight:800; color:#0f172a; font-family:'Outfit', sans-serif;" id="report-preview-company">Enterprise Retailer</div>
+                                <div style="font-size:16px; font-weight:700; color:#0284c7; margin-top:4px;">Executive Performance & BI Diagnostic Report</div>
+                            </div>
+                            <div style="text-align:right;">
+                                <div style="font-size:12px; font-weight:700; color:#64748b;" id="report-date-now">Generated: 2026-07-21</div>
+                                <span style="font-size:11px; font-weight:700; background:#e0f2fe; color:#0284c7; padding:4px 10px; border-radius:12px; display:inline-block; margin-top:6px;" id="report-preview-sector">Sector: Grocery</span>
+                            </div>
+                        </div>
+
+                        <!-- Executive KPI Snapshot -->
+                        <div style="margin-bottom:30px;">
+                            <h4 style="font-size:15px; font-weight:800; text-transform:uppercase; letter-spacing:0.8px; color:#0f172a; margin-bottom:14px; border-left:4px solid #0284c7; padding-left:10px;">1. Key Performance Highlights</h4>
+                            <div class="kpis-container-grid" style="grid-template-columns: repeat(4, 1fr); gap:14px;">
+                                <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:14px; border-radius:10px;">
+                                    <div style="font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase;">Revenue</div>
+                                    <div style="font-size:20px; font-weight:800; color:#0f172a; margin-top:4px;" id="report-val-revenue">₹0</div>
+                                </div>
+                                <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:14px; border-radius:10px;">
+                                    <div style="font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase;">Profit</div>
+                                    <div style="font-size:20px; font-weight:800; color:#10b981; margin-top:4px;" id="report-val-profit">₹0</div>
+                                </div>
+                                <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:14px; border-radius:10px;">
+                                    <div style="font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase;">Total Volume</div>
+                                    <div style="font-size:20px; font-weight:800; color:#0f172a; margin-top:4px;" id="report-val-sales">0</div>
+                                </div>
+                                <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:14px; border-radius:10px;">
+                                    <div style="font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase;">Unique Customers</div>
+                                    <div style="font-size:20px; font-weight:800; color:#6366f1; margin-top:4px;" id="report-val-customers">0</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Embedded Visualizations Snapshot -->
+                        <div style="margin-bottom:30px;">
+                            <h4 style="font-size:15px; font-weight:800; text-transform:uppercase; letter-spacing:0.8px; color:#0f172a; margin-bottom:14px; border-left:4px solid #0284c7; padding-left:10px;">2. Visual Diagnostic Charts</h4>
+                            <div class="bi-dashboard-grid-2">
+                                <div style="border:1px solid #e2e8f0; padding:14px; border-radius:12px; height:240px;">
+                                    <div style="font-size:12px; font-weight:700; margin-bottom:8px;">Sales & Revenue Trend</div>
+                                    <div style="height:190px;"><canvas id="report-chart-sales"></canvas></div>
+                                </div>
+                                <div style="border:1px solid #e2e8f0; padding:14px; border-radius:12px; height:240px;">
+                                    <div style="font-size:12px; font-weight:700; margin-bottom:8px;">Category Revenue Share</div>
+                                    <div style="height:190px;"><canvas id="report-chart-category"></canvas></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ML Forecast & Strategic Recommendations -->
+                        <div style="margin-bottom:20px;">
+                            <h4 style="font-size:15px; font-weight:800; text-transform:uppercase; letter-spacing:0.8px; color:#0f172a; margin-bottom:14px; border-left:4px solid #0284c7; padding-left:10px;">3. Strategic Insights & ML Forecast</h4>
+                            <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:18px; border-radius:12px;" id="report-recommendations-box">
+                                <p style="font-size:13px; color:#475569; margin-bottom:8px;"><i class="fas fa-check-circle" style="color:#10b981; margin-right:6px;"></i> High profit growth detected in top performing product categories.</p>
+                                <p style="font-size:13px; color:#475569;"><i class="fas fa-check-circle" style="color:#10b981; margin-right:6px;"></i> Recommend maintaining buffer stock for fast-moving items.</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <!-- ============================================= -->
+                <!-- 6. SETTINGS VIEW                              -->
+                <!-- ============================================= -->
+
+            </div>
+        </main>
+    </div>
+
+    <!-- FULLSCREEN CHART MODAL -->
+    <div class="modal" id="chart-fullscreen-modal" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.75); backdrop-filter:blur(6px); z-index:9999; align-items:center; justify-content:center;">
+        <div style="background:var(--card-bg); width:90vw; height:85vh; border-radius:20px; padding:24px; display:flex; flex-direction:column; box-shadow:var(--shadow-lg);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                <h3 id="fullscreen-chart-title" style="font-size:20px; font-weight:800; color:var(--text-main);">Chart Fullscreen View</h3>
+                <button id="close-fullscreen-modal-btn" style="background:none; border:none; font-size:22px; color:var(--text-muted); cursor:pointer;"><i class="fas fa-xmark"></i></button>
+            </div>
+            <div style="flex-grow:1; position:relative;">
+                <canvas id="fullscreen-chart-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- App JS Modules -->
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/charts.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+    <script src="assets/js/upload.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

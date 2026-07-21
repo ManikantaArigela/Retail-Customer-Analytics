@@ -1,0 +1,67 @@
+<!-- Reports Export View Section -->
+<div style="display:flex; flex-direction:column; gap:24px; max-width:800px; margin: 0 auto;">
+    
+    <div class="card" style="text-align:center; padding:40px;">
+        <i class="fas fa-file-invoice-dollar" style="font-size:48px; color:var(--primary-color); margin-bottom:20px;"></i>
+        <h2 style="font-weight:700; color:var(--primary-dark); margin-bottom:8px;">Export Retail Intelligence Reports</h2>
+        <p style="color:var(--text-muted); font-size:14px; max-width:500px; margin:0 auto 30px;">
+            Download production-ready business reports structured for C-level executives, operations managers, or data analysts.
+        </p>
+        
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; text-align:left; margin-bottom:10px;">
+            
+            <!-- PDF Card -->
+            <div class="card" style="padding:24px; display:flex; flex-direction:column; gap:16px; border-top: 4px solid var(--primary-color);">
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+                    <i class="fas fa-file-pdf" style="font-size:28px; color:var(--danger-color);"></i>
+                    <span style="font-size:10px; background:#f8d7da; color:#721c24; padding:2px 6px; border-radius:4px; font-weight:700;">PDF</span>
+                </div>
+                <div>
+                    <h4 style="font-size:15px; font-weight:700; color:var(--primary-dark); margin-bottom:4px;">Executive Briefing</h4>
+                    <p style="font-size:12px; color:var(--text-muted); line-height:1.4;">
+                        A polished document containing key performance metrics, product sales tables, and compiled AI insights.
+                    </p>
+                </div>
+                <button id="download-pdf" class="btn-upload" style="margin-top:auto; font-size:12px; padding:8px 16px; background-color:var(--primary-color);">
+                    <i class="fas fa-download"></i> Download PDF
+                </button>
+            </div>
+            
+            <!-- Excel Card -->
+            <div class="card" style="padding:24px; display:flex; flex-direction:column; gap:16px; border-top: 4px solid var(--success-color);">
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+                    <i class="fas fa-file-excel" style="font-size:28px; color:var(--success-color);"></i>
+                    <span style="font-size:10px; background:#d4edda; color:#155724; padding:2px 6px; border-radius:4px; font-weight:700;">XLSX</span>
+                </div>
+                <div>
+                    <h4 style="font-size:15px; font-weight:700; color:var(--primary-dark); margin-bottom:4px;">Operational Sheets</h4>
+                    <p style="font-size:12px; color:var(--text-muted); line-height:1.4;">
+                        A multi-sheet workbook containing executive summaries, fully cleaned transactions database, and ML forecast values.
+                    </p>
+                </div>
+                <button id="download-xlsx" class="btn-upload" style="margin-top:auto; font-size:12px; padding:8px 16px; background-color:var(--success-color); box-shadow: 0 4px 12px rgba(40,167,69,0.2);">
+                    <i class="fas fa-download"></i> Download Excel
+                </button>
+            </div>
+            
+            <!-- CSV Card -->
+            <div class="card" style="padding:24px; display:flex; flex-direction:column; gap:16px; border-top: 4px solid var(--accent-color);">
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+                    <i class="fas fa-file-csv" style="font-size:28px; color:var(--accent-color);"></i>
+                    <span style="font-size:10px; background:var(--primary-light); color:var(--primary-color); padding:2px 6px; border-radius:4px; font-weight:700;">CSV</span>
+                </div>
+                <div>
+                    <h4 style="font-size:15px; font-weight:700; color:var(--primary-dark); margin-bottom:4px;">Clean Raw Database</h4>
+                    <p style="font-size:12px; color:var(--text-muted); line-height:1.4;">
+                        A standardized CSV database dump of all transaction entries after deduplication, date alignment, and column mapping.
+                    </p>
+                </div>
+                <button id="download-csv" class="btn-upload" style="margin-top:auto; font-size:12px; padding:8px 16px; background-color:var(--accent-color); box-shadow: 0 4px 12px rgba(0,122,255,0.2);">
+                    <i class="fas fa-download"></i> Download CSV
+                </button>
+            </div>
+            
+        </div>
+    </div>
+    
+</div>

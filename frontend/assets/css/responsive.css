@@ -1,0 +1,58 @@
+/* Responsive Breakpoints */
+
+@media (max-width: 1024px) {
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .chart-card {
+        height: 340px;
+    }
+}
+
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        height: auto;
+        padding: 16px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .sidebar-logo {
+        margin-bottom: 0;
+    }
+    
+    .sidebar-menu {
+        display: none; /* In a production layout we can implement a mobile nav toggle */
+    }
+    
+    .sidebar-footer {
+        display: none;
+    }
+    
+    .content-body {
+        padding: 16px;
+    }
+    
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .top-bar {
+        padding: 0 16px;
+    }
+    
+    .chat-bubble {
+        max-width: 90%;
+    }
+}

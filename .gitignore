@@ -1,0 +1,31 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Database
+database/*.db
+
+# Data & Exports
+data/raw/
+data/cleaned/
+data/processed/
+data/exports/
+
+# ML models
+ml/saved_models/
+*.pkl
+
+# IDE / System
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

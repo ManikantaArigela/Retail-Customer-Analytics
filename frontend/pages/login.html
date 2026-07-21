@@ -1,0 +1,104 @@
+<div style="display: flex; align-items: center; justify-content: center; min-height: calc(100vh - 60px); width: 100%;">
+    <div class="card" style="width: 450px; padding: 40px; box-shadow: 0 10px 40px rgba(26, 79, 138, 0.08);">
+        
+        <!-- LOGIN PANEL -->
+        <div id="login-section" style="display: block;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <i class="fas fa-chart-pie" style="font-size: 40px; color: var(--primary-color); margin-bottom: 16px;"></i>
+                <h2 style="font-size: 24px; color: var(--primary-dark); font-weight: 700; margin-bottom: 8px;">Welcome Back</h2>
+                <p style="color: var(--text-muted); font-size: 14px;">Sign in to your Retail BI dashboard</p>
+            </div>
+            
+            <form id="login-form">
+                <div style="margin-bottom: 20px;">
+                    <label for="login-username" style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px;">Username</label>
+                    <input type="text" id="login-username" required placeholder="Enter your username" 
+                           style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; outline: none; transition: var(--transition);">
+                </div>
+                
+                <div style="margin-bottom: 24px;">
+                    <label for="login-password" style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px;">Password</label>
+                    <input type="password" id="login-password" required placeholder="Enter your password" 
+                           style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; outline: none; transition: var(--transition);">
+                </div>
+                
+                <button type="submit" class="btn-upload" style="width: 100%; padding: 12px; font-size: 15px; margin-bottom: 20px;">
+                    Sign In <i class="fas fa-arrow-right" style="margin-left: 6px;"></i>
+                </button>
+            </form>
+            
+            <div style="text-align: center; font-size: 13.5px; color: var(--text-muted);">
+                Don't have an account? <a href="#" id="show-register" style="color: var(--accent-color); text-decoration: none; font-weight: 600;">Sign Up</a>
+            </div>
+        </div>
+
+        <!-- REGISTER PANEL -->
+        <div id="register-section" style="display: none;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <i class="fas fa-user-plus" style="font-size: 40px; color: var(--primary-color); margin-bottom: 16px;"></i>
+                <h2 style="font-size: 24px; color: var(--primary-dark); font-weight: 700; margin-bottom: 8px;">Create Account</h2>
+                <p style="color: var(--text-muted); font-size: 14px;">Register your retail business platform</p>
+            </div>
+            
+            <form id="register-form">
+                <div style="margin-bottom: 16px;">
+                    <label for="reg-username" style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px;">Username</label>
+                    <input type="text" id="reg-username" required placeholder="Choose a username" 
+                           style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; outline: none;">
+                </div>
+                
+                <div style="margin-bottom: 16px;">
+                    <label for="reg-email" style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px;">Email Address</label>
+                    <input type="email" id="reg-email" required placeholder="Enter email" 
+                           style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; outline: none;">
+                </div>
+                
+                <div style="margin-bottom: 16px;">
+                    <label for="reg-password" style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px;">Password</label>
+                    <input type="password" id="reg-password" required placeholder="Create password" 
+                           style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; outline: none;">
+                </div>
+                
+                <div style="margin-bottom: 16px;">
+                    <label for="reg-company" style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px;">Company Name</label>
+                    <input type="text" id="reg-company" required placeholder="e.g. Acme Retailers" 
+                           style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; outline: none;">
+                </div>
+                
+                <div style="margin-bottom: 24px;">
+                    <label for="reg-sector" style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px;">Retail Sector</label>
+                    <select id="reg-sector" required 
+                            style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; background-color: #ffffff; outline: none;">
+                        <option value="grocery">Grocery Store</option>
+                        <option value="fashion">Fashion & Apparel</option>
+                        <option value="healthcare">Healthcare & Biotech</option>
+                        <option value="pharmacy">Pharmacy</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="furniture">Furniture</option>
+                        <option value="beauty">Beauty & Cosmetics</option>
+                        <option value="automotive">Automotive Accessories</option>
+                        <option value="fmcg">Fast Moving Consumer Goods</option>
+                        <option value="home_living">Home & Living</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn-upload" style="width: 100%; padding: 12px; font-size: 15px; margin-bottom: 20px;">
+                    Sign Up <i class="fas fa-check" style="margin-left: 6px;"></i>
+                </button>
+            </form>
+            
+            <div style="text-align: center; font-size: 13.5px; color: var(--text-muted);">
+                Already have an account? <a href="#" id="show-login" style="color: var(--accent-color); text-decoration: none; font-weight: 600;">Sign In</a>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<style>
+    /* Styling overrides inside form tags */
+    input:focus, select:focus {
+        border-color: var(--primary-color) !important;
+        box-shadow: 0 0 0 3px var(--primary-light);
+    }
+</style>

@@ -1,0 +1,74 @@
+<!-- Analytics View Section -->
+<div style="display:flex; flex-direction:column; gap:24px;">
+    
+    <!-- Top Row: Forecasting and Segmentation -->
+    <div class="dashboard-grid">
+        <!-- 30-Day Forecast -->
+        <div class="card chart-card">
+            <div class="chart-header">
+                <h3 class="chart-title"><i class="fas fa-magic" style="color:var(--accent-color); margin-right:8px;"></i> AI 30-Day Sales Forecast</h3>
+                <span style="font-size:11px; background:rgba(0,122,255,0.1); color:var(--accent-color); padding:4px 8px; border-radius:12px; font-weight:600;">Autoregressive Model</span>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="forecast-canvas"></canvas>
+            </div>
+        </div>
+        
+        <!-- Customer Segments Doughnut -->
+        <div class="card chart-card">
+            <div class="chart-header">
+                <h3 class="chart-title"><i class="fas fa-users" style="color:var(--success-color); margin-right:8px;"></i> Customer RFM Segments</h3>
+                <span style="font-size:11px; background:rgba(52,199,89,0.1); color:var(--success-color); padding:4px 8px; border-radius:12px; font-weight:600;">K-Means</span>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="customer-segment-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Middle Row: Monthly Revenue and Regions -->
+    <div class="dashboard-grid" style="grid-template-columns: 2fr 1fr;">
+        <!-- Monthly Revenue -->
+        <div class="card chart-card">
+            <div class="chart-header">
+                <h3 class="chart-title"><i class="fas fa-chart-bar" style="color:var(--primary-color); margin-right:8px;"></i> Monthly Revenue Comparison</h3>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="monthly-revenue-canvas"></canvas>
+            </div>
+        </div>
+        
+        <!-- Regional performance table -->
+        <div class="card table-card" style="height:380px;">
+            <div class="table-header">
+                <h3 class="chart-title" style="margin-bottom:0;"><i class="fas fa-globe" style="color:var(--warning-color); margin-right:8px;"></i> Sales by Region</h3>
+            </div>
+            <div class="table-wrapper">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Region</th>
+                            <th>Total Revenue</th>
+                        </tr>
+                    </thead>
+                    <tbody id="regional-sales-tbody">
+                        <!-- Loaded dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bottom Row: Strategic Recommendations -->
+    <div class="card">
+        <h3 class="chart-title" style="margin-bottom:20px;"><i class="fas fa-lightbulb" style="color:var(--warning-color); margin-right:8px;"></i> Strategic AI Business Insights & Recommendations</h3>
+        <div class="recommendation-list" id="recommendations-list-container">
+            <!-- Dynamically populated recommendations warnings alerts -->
+            <div class="rec-item info">
+                <i class="fas fa-info-circle" style="margin-top:2px;"></i>
+                <div>Analyzing transactions database... recommendations will appear once a dataset is loaded.</div>
+            </div>
+        </div>
+    </div>
+    
+</div>

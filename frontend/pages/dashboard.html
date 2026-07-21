@@ -1,0 +1,129 @@
+<!-- Dashboard KPIs row -->
+<div class="metrics-grid">
+    <div class="kpi-card">
+        <div class="kpi-icon-wrapper revenue">
+            <i class="fas fa-dollar-sign"></i>
+        </div>
+        <div class="kpi-info">
+            <span class="kpi-label">Total Revenue</span>
+            <span class="kpi-value" id="db-kpi-revenue">$0.00</span>
+            <div id="db-revenue-growth">--</div>
+        </div>
+    </div>
+    
+    <div class="kpi-card">
+        <div class="kpi-icon-wrapper sales">
+            <i class="fas fa-shopping-cart"></i>
+        </div>
+        <div class="kpi-info">
+            <span class="kpi-label">Units Sold</span>
+            <span class="kpi-value" id="db-kpi-sales">0</span>
+            <div id="db-profit-margin">--</div>
+        </div>
+    </div>
+    
+    <div class="kpi-card">
+        <div class="kpi-icon-wrapper customers">
+            <i class="fas fa-users"></i>
+        </div>
+        <div class="kpi-info">
+            <span class="kpi-label">Customers</span>
+            <span class="kpi-value" id="db-kpi-customers">0</span>
+            <span style="font-size: 11px; color: var(--text-muted);">Unique profiles</span>
+        </div>
+    </div>
+    
+    <div class="kpi-card">
+        <div class="kpi-icon-wrapper products">
+            <i class="fas fa-box"></i>
+        </div>
+        <div class="kpi-info">
+            <span class="kpi-label">Products Tracked</span>
+            <span class="kpi-value" id="db-kpi-products">0</span>
+            <span style="font-size: 11px; color: var(--text-muted);">Active SKUs</span>
+        </div>
+    </div>
+</div>
+
+<!-- Primary Charts -->
+<div class="dashboard-grid">
+    <div class="card chart-card">
+        <div class="chart-header">
+            <h3 class="chart-title">Daily Sales Trend</h3>
+            <i class="fas fa-ellipsis-v" style="color: var(--text-muted); cursor: pointer;"></i>
+        </div>
+        <div class="chart-wrapper">
+            <canvas id="sales-trend-canvas"></canvas>
+        </div>
+    </div>
+    
+    <div class="card chart-card">
+        <div class="chart-header">
+            <h3 class="chart-title">Category Distribution</h3>
+        </div>
+        <div class="chart-wrapper">
+            <canvas id="category-distribution-canvas"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Bottom Section: Top Products & Upload Tool -->
+<div class="dashboard-grid" style="grid-template-columns: 3fr 2fr;">
+    <!-- Top Products table -->
+    <div class="card table-card">
+        <div class="table-header">
+            <h3 class="chart-title" style="margin-bottom:0;">Top Performing Products</h3>
+            <span style="font-size:12px; color:var(--primary-color); font-weight:600; cursor:pointer;">View All</span>
+        </div>
+        <div class="table-wrapper">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Product</th>
+                        <th>Volume</th>
+                        <th>Revenue</th>
+                        <th>Profit</th>
+                    </tr>
+                </thead>
+                <tbody id="top-products-tbody">
+                    <!-- Loaded dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Upload dataset widget -->
+    <div class="card" style="display: flex; flex-direction: column; justify-content: center;">
+        <h3 class="chart-title" style="margin-bottom: 16px;">Update Business Dataset</h3>
+        <form id="upload-form">
+            <div style="margin-bottom:16px;">
+                <label for="business-sector" style="display:block; font-size:12px; font-weight:600; margin-bottom:6px; color:var(--text-muted);">SELECT BUSINESS SECTOR</label>
+                <select id="business-sector" required 
+                        style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 13px; background-color:#ffffff; outline:none;">
+                    <option value="grocery">Grocery Store</option>
+                    <option value="fashion">Fashion & Apparel</option>
+                    <option value="healthcare">Healthcare & Biotech</option>
+                    <option value="pharmacy">Pharmacy</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="furniture">Furniture</option>
+                    <option value="beauty">Beauty & Cosmetics</option>
+                    <option value="automotive">Automotive Accessories</option>
+                    <option value="fmcg">Fast Moving Consumer Goods</option>
+                    <option value="home_living">Home & Living</option>
+                </select>
+            </div>
+            
+            <div class="upload-wrapper" id="dropzone" style="padding: 24px 16px; margin-bottom: 16px;">
+                <i class="fas fa-cloud-upload-alt upload-icon" style="font-size:32px; margin-bottom:10px;"></i>
+                <div class="upload-heading" style="font-size:14px; margin-bottom:4px;">Drag & Drop CSV / Excel</div>
+                <div class="upload-sub" style="font-size:11px; margin-bottom:0;" id="upload-file-name">or click to browse local files</div>
+                <input type="file" id="dataset-file" accept=".csv, .xlsx, .xls" style="display: none;">
+            </div>
+            
+            <button type="submit" class="btn-upload" style="width: 100%; padding: 10px; font-size: 13px;">
+                <i class="fas fa-sync" style="margin-right: 6px;"></i> Process & Train AI
+            </button>
+        </form>
+    </div>
+</div>

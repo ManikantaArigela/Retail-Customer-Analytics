@@ -1,0 +1,80 @@
+<div style="display:flex; flex-direction:column; gap:24px; max-width:800px; margin: 0 auto;">
+    
+    <!-- Profile & Business Configuration -->
+    <div class="card">
+        <h3 class="chart-title" style="margin-bottom:16px;"><i class="fas fa-id-card" style="color:var(--primary-color); margin-right:8px;"></i> Business Information</h3>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:20px;">
+            Set your core business identity. This modifies the dashboard headers and maps the sector analytics.
+        </p>
+        <form id="profile-form">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-bottom:20px;">
+                <div>
+                    <label for="set-company" style="display:block; font-size:12px; font-weight:600; margin-bottom:6px; color:var(--text-muted);">COMPANY NAME</label>
+                    <input type="text" id="set-company" required placeholder="Enter company name"
+                           style="width: 100%; padding: 10px; border:1px solid var(--border-color); border-radius:8px; font-size:14px; outline:none;">
+                </div>
+                <div>
+                    <label for="set-sector" style="display:block; font-size:12px; font-weight:600; margin-bottom:6px; color:var(--text-muted);">RETAIL SECTOR</label>
+                    <select id="set-sector" required
+                            style="width: 100%; padding: 10px; border:1px solid var(--border-color); border-radius:8px; font-size:14px; background-color:#ffffff; outline:none;">
+                        <option value="grocery">Grocery Store</option>
+                        <option value="fashion">Fashion & Apparel</option>
+                        <option value="healthcare">Healthcare & Biotech</option>
+                        <option value="pharmacy">Pharmacy</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="furniture">Furniture</option>
+                        <option value="beauty">Beauty & Cosmetics</option>
+                        <option value="automotive">Automotive Accessories</option>
+                        <option value="fmcg">Fast Moving Consumer Goods</option>
+                        <option value="home_living">Home & Living</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn-upload" style="font-size:13px; padding:10px 20px;">
+                <i class="fas fa-save" style="margin-right:6px;"></i> Save Changes
+            </button>
+        </form>
+    </div>
+    
+    <!-- Instant Evaluation / Mock Data Generator -->
+    <div class="card">
+        <h3 class="chart-title" style="margin-bottom:16px;"><i class="fas fa-magic" style="color:var(--accent-color); margin-right:8px;"></i> Evaluation Sandbox & Mock Data Generator</h3>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:20px;">
+            Don't have a dataset ready? Select a retail sector below to generate a realistic mock sales CSV file (includes order dates, item categories, price lists, customer IDs, and inventory stock). You can download and immediately upload this file on the Dashboard page to evaluate the platform.
+        </p>
+        
+        <div style="display:flex; gap:16px; align-items:center;">
+            <div style="flex-grow:1;">
+                <select id="sample-sector-select" 
+                        style="width: 100%; padding: 11px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 13.5px; background-color:#ffffff; outline:none;">
+                    <option value="grocery">Grocery Sector (Produce, Dairy, Coffee...)</option>
+                    <option value="fashion">Fashion & Apparel (Jeans, Boots, Belts...)</option>
+                    <option value="electronics">Electronics (Computers, Mobiles, Speakers...)</option>
+                    <option value="healthcare">Healthcare Products (Prescriptions, OTC, Supplements...)</option>
+                    <option value="furniture">Furniture (Sofas, Queen Beds, Desk Lamps...)</option>
+                    <option value="beauty">Beauty & Cosmetics (Cleansers, Makeup, Haircare...)</option>
+                    <option value="automotive">Automotive Accessories (Engine Oil, Tires, Wiper Blades...)</option>
+                    <option value="fmcg">FMCG Goods (Laundry Detergents, Canned Foods...)</option>
+                    <option value="home_living">Home & Living (Sheet Sets, Skillets, Candles...)</option>
+                </select>
+            </div>
+            
+            <button id="btn-download-sample" class="btn-upload" style="background-color:var(--accent-color); box-shadow:0 4px 12px rgba(0,122,255,0.15); display:inline-flex; align-items:center; gap:8px;">
+                <i class="fas fa-file-download"></i> Generate Sample CSV
+            </button>
+        </div>
+    </div>
+    
+    <!-- System Reset & Database Cleanup -->
+    <div class="card" style="border: 1px solid rgba(255, 59, 48, 0.2);">
+        <h3 class="chart-title" style="margin-bottom:16px; color:var(--danger-color);"><i class="fas fa-trash-alt" style="margin-right:8px;"></i> Danger Zone</h3>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:20px;">
+            Wipe your database records. This will permanently delete your uploaded raw files, transaction sales entries, and delete your trained machine learning models.
+        </p>
+        
+        <button id="btn-reset-db" class="btn-upload" style="background-color:var(--danger-color); box-shadow:0 4px 12px rgba(255,59,48,0.2);">
+            <i class="fas fa-exclamation-triangle" style="margin-right:6px;"></i> Reset Database Records
+        </button>
+    </div>
+    
+</div>

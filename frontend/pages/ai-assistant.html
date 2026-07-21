@@ -1,0 +1,26 @@
+<div style="display:flex; flex-direction:column; gap:20px; max-width:900px; margin: 0 auto; height: calc(100vh - 120px);">
+    
+    <div style="flex-shrink: 0;">
+        <h2 style="font-weight:700; color:var(--primary-dark); margin-bottom:4px;"><i class="fas fa-robot" style="color:var(--primary-color); margin-right:8px;"></i> AI Retail Assistant</h2>
+        <p style="color:var(--text-muted); font-size:13px;">
+            Query metrics, check stock alerts, look up categories, or find top items using natural language commands.
+        </p>
+    </div>
+    
+    <!-- Conversational Window -->
+    <div class="chat-container">
+        <!-- Message list -->
+        <div class="chat-history" id="chat-history">
+            <!-- Messages added dynamically -->
+        </div>
+        
+        <!-- Input form -->
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" class="chat-input" placeholder="Type a message... (e.g. 'What is our total revenue?', 'Show top products')">
+            <button id="chat-send-btn" class="chat-send-btn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+    
+</div>
